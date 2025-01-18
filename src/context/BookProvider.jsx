@@ -25,7 +25,7 @@ const BookProvider = ({ children }) => {
   };
   // ============= Filter Books ============
   const filteredBooks = booksList.filter((book) =>
-    book.title.toLowerCase().includes(searchQuery.toLowerCase())
+    book.title.toLowerCase().trim().includes(searchQuery.toLowerCase().trim())
   );
 
   // ============= Like Books ============
