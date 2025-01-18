@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 const BookProvider = ({ children }) => {
   // ============= State ============
   const [booksList, setBooksList] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   // ============= Effect ============
   useEffect(() => {
@@ -22,12 +23,26 @@ const BookProvider = ({ children }) => {
       )
     );
   };
+  // ============= Filter Books ============
+  const filteredBooks = booksList.filter((book) =>
+    book.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   // ============= Like Books ============
   const likedBooks = booksList.filter((book) => book.like);
 
   // ============= Rendering ============
   return (
-    <BookContext.Provider value={{ booksList, toggleLike, likedBooks }}>
+    <BookContext.Provider
+      value={{
+        booksList,
+        toggleLike,
+        likedBooks,
+        searchQuery,
+        filteredBooks,
+        setSearchQuery,
+      }}
+    >
       {children}
     </BookContext.Provider>
   );
