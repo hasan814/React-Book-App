@@ -1,16 +1,13 @@
 import { AiFillHeart } from "react-icons/ai";
-import { useState } from "react";
+import { BookContext } from "../../context/BookContext";
+import { useContext } from "react";
 
 import PropTypes from "prop-types";
 
 const BookCard = ({ title, author, image, language, pages }) => {
-  // ============== State ================
-  const [like, setLike] = useState(false);
-
-  // ============== Like Handler ================
-  const likeHandlder = () => {
-    setLike((like) => !like);
-  };
+  // ============== Context ================
+  const { booksList, toggleLike } = useContext(BookContext);
+  const book = booksList.find((b) => b.title === title);
 
   // ============== Rendering ================
   return (
@@ -32,12 +29,12 @@ const BookCard = ({ title, author, image, language, pages }) => {
         </div>
       </div>
       <button
-        onClick={likeHandlder}
+        onClick={() => toggleLike(title)}
         className="flex items-center justify-center p-2 bg-gray-600 transition duration-200"
       >
         <AiFillHeart
           size={24}
-          color={like ? "red" : "#e0e0e0"}
+          color={book.like ? "red" : "#e0e0e0"}
           className="transition duration-200"
         />
       </button>
@@ -50,7 +47,7 @@ BookCard.propTypes = {
   author: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
-  pages: PropTypes.string.isRequired,
+  pages: PropTypes.number.isRequired,
 };
 
 export default BookCard;
